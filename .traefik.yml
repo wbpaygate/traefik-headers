@@ -1,0 +1,7 @@
+displayName: Headers
+type: middleware
+import: github.com/wbpaygate/traefik-headers
+summary: Headers
+testData:
+  headersData: |
+    { }
