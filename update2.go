@@ -18,7 +18,8 @@ func (g *GlobalHeaders) update(b []byte) error {
 	for k, vv := range tmph {
 		vv2 := make([]string, 0, len(vv))
 		for _, v := range vv {
-			if len(strings.TrimSpace(v)) != 0 {
+			v = strings.TrimSpace(v)
+			if len(v) != 0 {
 				vv2 = append(vv2, v)
 			}
 		}
