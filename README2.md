@@ -94,7 +94,8 @@ traefikMiddleware:
       keeperHeadersKey: headers
       keeperURL: https://keeper-ext-feature-wg-8238.k8s.dev.paywb.lan
       keeperReqTimeout: 100s
-      keeperAdminPassword: Pas$w0rd
+      keeperUsername: username
+      keeperPassword: Pas$w0rd
       keeperReloadInterval: 45s
       headersData: |
         { 
@@ -106,7 +107,8 @@ traefikMiddleware:
 - *keeperHeadersKey* - ключ в keeper, под которым хранится json конфигурация
 - *keeperURL* - url keeper, в котором хранится json кофиграция
 - *keeperReqTimeout* - таймаут ожидания ответа при запросе к keeper. По умолчанию 300s
-- *keeperAdminPassword* - пароль keeper
+- *keeperUsername* - пользователь keeper
+- *keeperPassword* - пароль keeper
 - *keeperReloadInterval* - интервал опроса keeper для получения обновлений конфигурации. По умолчанию 30s
 - *headersData* - json конфигурации плагина, который будет использоваться в случае недоступности keeper при инициализации плагина
 
