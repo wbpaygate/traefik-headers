@@ -50,7 +50,7 @@ func (k *Keeper) Get(key string) (*Resp, error) {
 		return nil, errors.Wrap(err, "cannot create request")
 	}
 
-	req.SetBasicAuth("admin", k.Password)
+	req.SetBasicAuth(k.Username, k.Password)
 	resp, err := client.Do(req)
 	if err != nil {
 		return nil, err
@@ -75,13 +75,15 @@ func (k *Keeper) Get(key string) (*Resp, error) {
 type Keeper struct {
 	URL      string
 	Timeout  time.Duration
+	Username string
 	Password string
 }
 
-func New(URL string, timeout time.Duration, password string) *Keeper {
+func New(URL string, timeout time.Duration, username, password string) *Keeper {
 	return &Keeper{
 		URL:      URL,
 		Timeout:  timeout,
+		Username: username,
 		Password: password,
 	}
 }

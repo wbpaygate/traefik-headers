@@ -26,7 +26,8 @@ type Config struct {
 	KeeperHeadersKey     string `json:"keeperHeadersKey,omitempty"`
 	KeeperURL            string `json:"keeperURL,omitempty"`
 	KeeperReqTimeout     string `json:"keeperReqTimeout,omitempty"`
-	KeeperAdminPassword  string `json:"keeperAdminPassword,omitempty"`
+	KeeperUsername       string `json:"keeperUsername,omitempty"`
+	KeeperPassword       string `json:"keeperPassword,omitempty"`
 	HeadersData          string `json:"headersData,omitempty"`
 	KeeperReloadInterval string `json:"keeperReloadInterval,omitempty"`
 }
@@ -106,8 +107,11 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 	if len(config.KeeperURL) == 0 {
 		locallog("config: keeperURL is empty")
 	}
-	if len(config.KeeperAdminPassword) == 0 {
-		locallog("config: keeperAdminPassword is empty")
+	if len(config.KeeperUsername) == 0 {
+		locallog("config: keeperUsername is empty")
+	}
+	if len(config.KeeperPassword) == 0 {
+		locallog("config: keeperPassword is empty")
 	}
 	r := newHeaders(ctx, next, config, name)
 	r.l = l
@@ -140,7 +144,7 @@ func (g *GlobalHeaders) configure(ctx context.Context, config *Config) {
 		g.ticker.Reset(to)
 		ghs.tickerto = to
 	}
-	g.settings = keeper.New(config.KeeperURL, to, config.KeeperAdminPassword)
+	g.settings = keeper.New(config.KeeperURL, to, config.KeeperUsername, config.KeeperPassword)
 	g.config = config
 	err := ghs.setFromSettings()
 	if err != nil {
