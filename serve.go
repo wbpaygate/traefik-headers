@@ -1,6 +1,9 @@
 package traefik_headers
 
 import (
+	"bufio"
+	"fmt"
+	"net"
 	"net/http"
 	"sync/atomic"
 )
@@ -35,4 +38,13 @@ func (r *responseWriter) WriteHeader(code int) {
 		}
 	}
 	r.rw.WriteHeader(code)
+}
+
+func (r *responseWriter) Hijack() (net.Conn, *bufio.ReadWriter, error) {
+	hj, ok := r.rw.(http.Hijacker)
+	if !ok || hj == nil {
+		return nil, nil, fmt.Errorf("http.Hijacker interface is not implemented in given response writer")
+	}
+
+	return hj.Hijack()
 }
